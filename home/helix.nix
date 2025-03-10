@@ -4,6 +4,13 @@
     package = pkgs.helix;
     settings = {
       theme = "onedark";
+      keys.normal = {
+        " " = {
+          "," = ":w";
+          "." = ":wq";
+        };
+      };
+      keys.insert = { "j" = { "k" = "normal_mode"; }; };
       editor = {
         end-of-line-diagnostics = "hint";
         line-number = "relative";
