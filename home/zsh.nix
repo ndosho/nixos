@@ -1,0 +1,58 @@
+{ pkgs, ... }: {
+  programs.zsh.enable = true;
+  programs.zsh.autocd = true;
+  programs.zsh.autosuggestion.enable = true;
+  programs.zsh.autosuggestion.highlight = "fg=ff00ff,bg=cyan,bold,underline";
+  programs.zsh.dotDir = ".config/zsh";
+  programs.zsh.history.ignoreAllDups = true;
+  programs.zsh.history.path = "ZDOTDIR/.zsh_history";
+  programs.zsh.historySubstringSearch.enable = true;
+  programs.zsh.historySubstringSearch.searchUpKey = [ "^P" ];
+  programs.zsh.historySubstringSearch.searchDownKey = [ "^N" ];
+  programs.zsh.history.save = 10000;
+  programs.zsh.history.size = 10000;
+  programs.zsh.shellAliases = { ll = "ls -l"; };
+  programs.zsh.syntaxHighlighting.enable = true;
+  programs.starship.enable = true;
+  programs.starship.enableZshIntegration = true;
+  programs.bat.enable = true;
+  programs.zsh.sessionVariables = {
+    EDITOR = "hx";
+    VISUAL = "hx";
+    PAGER = "bat";
+  };
+  programs.zsh.envExtra = "\n  export ZDOTDIR=/home/ns/.config/zsh\n";
+
+  programs.zsh.initExtra = ''
+
+
+      setopt extended_glob
+        man() {
+          if command -v fzf > /dev/null 2>&1
+          then
+            local page=$(command man -k . | fzf --prompt='Man> ' | awk '{print $1}')
+            if [[ -n $page ]]
+            then 
+              emacsclient -c -a ''' +'Man $page | only'
+            fi 
+          else 
+            emacsclient -c -a ''' +'Man $1 | only'
+          fi
+        }
+
+    function ff() {
+      local selected_files
+      selected_files=$(fzf -m --preview='bat --style=numbers --line-range :500 --color=always {}')
+      if [[ -n $selected_files ]]; then 
+        emacsclient -c -a ''' $selected_files
+      fi 
+    }
+
+    function pkill {
+      ps aux | fzf --height 40% --layout=reverse --prompt='Select process to kill: ' | awk '{print $2}' | xargs -r sudo kill
+    }
+  '';
+
+  programs.fzf.enable = true;
+  programs.fzf.enableZshIntegration = true;
+}

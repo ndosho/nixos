@@ -1,0 +1,16 @@
+{pkgs, ...}:{
+  environment.systemPackages = with pkgs; [
+    vim 
+    zsh
+    wget
+    curl
+    jujutsu
+    git
+    nh
+    nvd
+    nix-output-monitor
+   ];
+
+  programs.firefox.enable = true;
+  programs.zsh.enable = true;
+}
