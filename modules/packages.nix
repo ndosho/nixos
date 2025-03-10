@@ -9,6 +9,7 @@
     nh
     nvd
     nix-output-monitor
+    localsend
   ];
 
   programs.zsh.enable = true;
