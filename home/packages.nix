@@ -1,4 +1,1 @@
-{ pkgs, ... }: {
-  home.packages = with pkgs; [ git nixfmt nixd alacritty brave ];
-
-}
+{ pkgs, ... }: { home.packages = with pkgs; [ git nixfmt nixd brave yazi ]; }

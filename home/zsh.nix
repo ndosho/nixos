@@ -5,13 +5,16 @@
   programs.zsh.autosuggestion.highlight = "fg=ff00ff,bg=cyan,bold,underline";
   programs.zsh.dotDir = ".config/zsh";
   programs.zsh.history.ignoreAllDups = true;
-  programs.zsh.history.path = "ZDOTDIR/.zsh_history";
+  programs.zsh.history.path = "/home/ns/.config/zsh/.zsh_history";
   programs.zsh.historySubstringSearch.enable = true;
   programs.zsh.historySubstringSearch.searchUpKey = [ "^P" ];
   programs.zsh.historySubstringSearch.searchDownKey = [ "^N" ];
   programs.zsh.history.save = 10000;
   programs.zsh.history.size = 10000;
-  programs.zsh.shellAliases = { ll = "ls -l"; };
+  programs.zsh.shellAliases = {
+    ll = "ls -l";
+    y = "yazi";
+  };
   programs.zsh.syntaxHighlighting.enable = true;
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;

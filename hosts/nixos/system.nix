@@ -1,6 +1,4 @@
-{
-  ...
-}: {
+{ ... }: {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -22,13 +20,13 @@
 
   services.libinput.enable = true;
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   services.openssh.enable = true;
 
-  environment.sessionVariables = {
-    FLAKE = "/home/ns/nixos";
-  };
+  environment.sessionVariables = { FLAKE = "/home/ns/nixos"; };
+
+  fonts.fontDir.enable = true;
 
   system.stateVersion = "24.11";
 }

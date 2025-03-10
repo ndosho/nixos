@@ -1,3 +1,1 @@
-{...}: {
-  imports = [./ns.nix];
-}
+{ ... }: { imports = [ ./ns.nix ]; }
