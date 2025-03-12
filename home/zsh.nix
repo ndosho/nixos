@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{
   programs.zsh.enable = true;
   programs.zsh.autocd = true;
   programs.zsh.autosuggestion.enable = true;
@@ -21,8 +21,9 @@
   programs.bat.enable = true;
   programs.zsh.sessionVariables = {
     EDITOR = "hx";
-    VISUAL = "hx";
+    VISUAL = "bat";
     PAGER = "bat";
+    NIXPKGS_ALLOW_UNFREE = 1;
   };
   programs.zsh.envExtra = "\n  export ZDOTDIR=/home/ns/.config/zsh\n";
 
