@@ -9,5 +9,7 @@
     ./fonts.nix 
     ./packages.nix
     ./hyprland.nix
+    ./rofi.nix
+    ./xdg.nix
   ];
 }

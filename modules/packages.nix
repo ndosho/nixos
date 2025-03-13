@@ -10,6 +10,7 @@
     nvd
     nix-output-monitor
     localsend
+    obsidian
   ];
 
   programs.zsh.enable = true;

@@ -12,6 +12,7 @@
       url = "github:catppuccin/waybar";
       flake = false;
     };
+
   };
 
   outputs = { nixpkgs, home-manager, hyprland, ... }:
@@ -22,9 +23,9 @@
         config.allowUnfree = true;
       };
     in {
-      nixosConfigurations.hyprland = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ 
+        modules = [
           ./hosts/hyprland/default.nix
           hyprland.nixosModules.default
           {

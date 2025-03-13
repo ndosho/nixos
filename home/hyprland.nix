@@ -61,8 +61,30 @@
 
       gestures = { workspace_swipe = true; };
 
+      # Scratchpad configuration
+      misc = {
+        force_default_wallpaper = 0;
+      };
+
+
       # Window rules
-      windowrule = [ "float,^(pavucontrol)$" "float,^(nm-connection-editor)$" ];
+      windowrule = [
+        "float,^(pavucontrol)$"
+        "float,^(nm-connection-editor)$"
+        "size 80% 80%,^(ghostty)$"
+        "center,^(ghostty)$"
+        "rounding 5,^(ghostty)$"
+        "opacity 0.95 0.95,^(ghostty)$"
+
+        # Dolphin rules
+        "rounding 5,^(dolphin)$"
+        "opacity 0.95 0.95,^(dolphin)$"
+
+        # Obsidian rules
+        "rounding 5,^(obsidian)$"
+        "opacity 0.98 0.98,^(obsidian)$"
+        "workspace 2,^(obsidian)$"
+      ];
 
       # Keybindings
       bind = [
@@ -71,6 +93,13 @@
         "$mod, M, exit"
         "$mod, Space, exec, wofi --show drun"
         "$mod, V, togglefloating"
+        "$mod, F, fullscreen"
+        "$mod, J, layoutmsg, togglesplit"
+        "$mod, Y, exec, hyprctl dispatch layoutmsg togglesplit"
+        
+        # Scratchpad bindings
+        "$mod, S, togglespecialworkspace, scratchpad"
+        "$mod SHIFT, S, movetoworkspace, special:scratchpad"
 
         # Move focus
         "$mod, left, movefocus, l"
@@ -151,6 +180,7 @@
       #pulseaudio,
       #cpu,
       #memory,
+      #temperature,
       #custom-power {
         background: #292c3c;
         padding: 0 10px;
@@ -161,6 +191,24 @@
       #custom-power {
         color: #e78284;
         padding-right: 15px;
+        margin-right: 5px;
+      }
+
+      #network {
+        color: #8caaee;
+      }
+
+      #network.disconnected {
+        color: #c6d0f5;
+        background: #292c3c;
+      }
+
+      #memory {
+        color: #81c8be;
+      }
+
+      #temperature {
+        color: #ef9f76;
       }
     '';
     settings = {
@@ -169,7 +217,7 @@
         position = "top";
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "clock" ];
-        modules-right = [ "network" "pulseaudio" "cpu" "custom/power" ];
+        modules-right = [ "network" "pulseaudio" "cpu" "memory" "temperature" "custom/power" ];
 
         "hyprland/workspaces" = {
           format = "{name}";
@@ -185,6 +233,10 @@
           format-wifi = "󰖩 {essid}";
           format-ethernet = "󰈀 Connected";
           format-disconnected = "󰖪 Disconnected";
+          tooltip-format = "{ipaddr} via {ifname}";
+          tooltip-format-wifi = "{essid} ({signalStrength}%) ";
+          tooltip-format-ethernet = "{ifname} ";
+          tooltip-format-disconnected = "Disconnected";
           on-click = "nm-connection-editor";
         };
 
@@ -200,9 +252,22 @@
           interval = 1;
         };
 
+        memory = {
+          format = "󰍛 {}%";
+          interval = 1;
+        };
+
+        temperature = {
+          format = "󰔏 {temperatureC}°C";
+          thermal-zone = 0;
+          critical-threshold = 80;
+          format-critical = "󱃂 {temperatureC}°C";
+          interval = 2;
+        };
+
         "custom/power" = {
           format = "⏻";
-          on-click = "wlogout";
+          on-click = "${pkgs.rofi}/bin/rofi -show power-menu -modi power-menu:${pkgs.rofi-power-menu}/bin/rofi-power-menu";
           tooltip = false;
         };
       };
