@@ -13,21 +13,24 @@
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
-  # Note: You'll need to replace these UUIDs with your actual disk UUIDs
+  
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/e65d4a5a-870a-4273-8151-41c17bf3a881";
-    fsType = "ext4";
+    device = "rpool/root";
+    fsType = "zfs";
   };
+
+  fileSystems."/home" = {
+    device = "rpool/home";
+    fsType = "zfs";
+    };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/D26A-038D";
+    device = "/dev/disk/by-uuid/D020-25FD";
     fsType = "vfat";
-    options = ["fmask=0077" "dmask=0077"];
-  };
+    options = [ "fmask=0022" "damask=0022" ];
+    };
 
-  swapDevices = [
-    {device = "/dev/disk/by-uuid/dd27d1fc-0039-45b9-80b3-7d6f3cbe51ec";}
-  ];
+   swapDevices = [ ];
 
   networking.useDHCP = lib.mkDefault true;
 
